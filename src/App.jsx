@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       dispatch(getZonesStatusThunk());
-    }, 15000);
+    }, 30000);
     return () => clearInterval(intervalId);
   }, []);
 
