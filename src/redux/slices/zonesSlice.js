@@ -94,23 +94,23 @@ export const {
 } = zonesSlice.actions;
 
 export const getZonesStatusThunk = () => (dispatch) => {
-  axios('http://127.0.0.1:8080/status')
+  axios('http://127.0.0.1:8080/v1/status')
     .then((res) => dispatch(setZonesStatus(res.data)));
 };
 
 export const setZonesPowerThunk = (zoneName, powerValue) => (dispatch) => {
-  axios.post('http://127.0.0.1:8080/zones/power', { [zoneName]: powerValue });
+  axios.post('http://127.0.0.1:8080/v1/zones/power', { [zoneName]: powerValue });
   if (!powerValue) {
     dispatch(setZonesLedValue(zoneName));
   }
 };
 
 export const setZonesSoundThunk = (zoneName, soundValue) => (dispatch) => {
-  axios.post('http://127.0.0.1:8080/zones/sound', { [zoneName]: soundValue });
+  axios.post('http://127.0.0.1:8080/v1/zones/sound', { [zoneName]: soundValue });
 };
 
 export const setZonesLedThunk = (zoneName, ledValue) => (dispatch) => {
-  axios.post('http://127.0.0.1:8080/zones/led', { [zoneName]: ledValue });
+  axios.post('http://127.0.0.1:8080/v1/zones/led', { [zoneName]: ledValue });
 };
 
 export default zonesSlice.reducer;
