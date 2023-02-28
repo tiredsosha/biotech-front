@@ -30,11 +30,11 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
   };
 
   const contentHandler = () => {
-    axios.post('http://127.0.0.1:8080/zones/content', { id: oneZone.zoneName });
+    axios.post('/zones/content', { id: oneZone.zoneName });
   };
 
   const ballsHandler = () => {
-    axios.post('http://127.0.0.1:8080/zones/balls', { id: oneZone.zoneName });
+    axios.post('/zones/balls', { id: oneZone.zoneName });
   };
 
   const soundHandler = () => {
