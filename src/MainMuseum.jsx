@@ -12,11 +12,11 @@ export default function MainMuseum() {
   const dispatch = useDispatch();
 
   const powerHandler = () => {
-    dispatch(setMuseumPowerThunk(museum.powerValue));
+    dispatch(setMuseumPowerThunk({ value: museum.powerValue }));
   };
 
   const soundHandler = () => {
-    dispatch(setMuseumSoundThunk(museum.soundValue));
+    dispatch(setMuseumSoundThunk({ value: museum.soundValue }));
   };
 
   return (
