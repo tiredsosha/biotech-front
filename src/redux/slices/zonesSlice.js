@@ -98,19 +98,19 @@ export const getZonesStatusThunk = () => (dispatch) => {
     .then((res) => dispatch(setZonesStatus(res.data)));
 };
 
-export const setZonesPowerThunk = (zoneName, powerValue) => (dispatch) => {
-  axios.post('/zones/power', { [zoneName]: powerValue });
-  if (!powerValue) {
-    dispatch(setZonesLedValue(zoneName));
+export const setZonesPowerThunk = (zoneValue) => (dispatch) => {
+  axios.post('/zones/power', zoneValue);
+  if (!zoneValue.powerValue) {
+    dispatch(setZonesLedValue(zoneValue.zone));
   }
 };
 
-export const setZonesSoundThunk = (zoneName, soundValue) => (dispatch) => {
-  axios.post('/zones/sound', { [zoneName]: soundValue });
+export const setZonesSoundThunk = (zoneValue) => (dispatch) => {
+  axios.post('/zones/sound', zoneValue);
 };
 
-export const setZonesLedThunk = (zoneName, ledValue) => (dispatch) => {
-  axios.post('/zones/led', { [zoneName]: ledValue });
+export const setZonesLedThunk = (zoneValue) => (dispatch) => {
+  axios.post('/zones/led', zoneValue);
 };
 
 export default zonesSlice.reducer;

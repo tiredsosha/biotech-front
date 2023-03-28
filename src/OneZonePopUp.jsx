@@ -25,24 +25,23 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
   const dispatch = useDispatch();
 
   const powerHandler = () => {
-    // console.log('нажали на выкключить: ---', powerValue);
-    dispatch(setZonesPowerThunk(oneZone.zoneName, powerValue));
+    dispatch(setZonesPowerThunk({ zone: oneZone.zoneName, value: powerValue }));
   };
 
   const contentHandler = () => {
-    axios.post('/zones/content', { id: oneZone.zoneName });
+    axios.post('/zones/content', { zone: oneZone.zoneName });
   };
 
   const ballsHandler = () => {
-    axios.post('/zones/balls', { id: oneZone.zoneName });
+    axios.post('/zones/balls', { zone: oneZone.zoneName });
   };
 
   const soundHandler = () => {
-    dispatch(setZonesSoundThunk(oneZone.zoneName, soundValue));
+    dispatch(setZonesSoundThunk({ zone: oneZone.zoneName, value: soundValue }));
   };
 
   const ledHandler = () => {
-    dispatch(setZonesLedThunk(oneZone.zoneName, ledValue));
+    dispatch(setZonesLedThunk({ zone: oneZone.zoneName, value: ledValue }));
   };
 
   return !isVisible ? null : (
