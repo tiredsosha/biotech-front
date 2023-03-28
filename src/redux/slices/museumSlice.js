@@ -14,11 +14,11 @@ const museumSlice = createSlice({
 export const { setMuseumPower, setMuseumSound } = museumSlice.actions;
 
 export const setMuseumPowerThunk = (museumPowerValue) => (dispatch) => {
-  axios.post('/museum/power', museumPowerValue)
+  axios.post('/mPower', museumPowerValue)
     .then(dispatch(setAllZonesPowerValue(!museumPowerValue.value)));
 };
 export const setMuseumSoundThunk = (museumSoundValue) => (dispatch) => {
-  axios.post('/museum/sound', museumSoundValue)
+  axios.post('/mSound', museumSoundValue)
     .then(dispatch(setAllZonesSoundValue(!museumSoundValue.value)));
 };
 
