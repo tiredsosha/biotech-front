@@ -44,6 +44,10 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
     dispatch(setZonesLedThunk({ zone: oneZone.zoneName, value: ledValue }));
   };
 
+  const seansHandler = () => {
+    axios('/session');
+  };
+
   return !isVisible ? null : (
     <div className="modal" onClick={onClose}>
       <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
@@ -140,20 +144,36 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
             }
             if (oneZone.zoneName === 'biolum') {
               return (
-                <div className="toggle">
-                  <div className="toggle-text">
-                    <h2>Звук:</h2>
+                <>
+                  <div className="toggle">
+                    <div className="toggle-text">
+                      <h2>Звук:</h2>
+                    </div>
+                    <div className="switch-container">
+                      <input
+                        onClick={soundHandler}
+                        onChange={() => (dispatch(setZonesSoundValue(oneZone.zoneName)))}
+                        checked={soundValue ? 'checked' : ''}
+                        className="toggle-sound"
+                        type="checkbox"
+                      />
+                    </div>
                   </div>
-                  <div className="switch-container">
-                    <input
-                      onClick={soundHandler}
-                      onChange={() => (dispatch(setZonesSoundValue(oneZone.zoneName)))}
-                      checked={soundValue ? 'checked' : ''}
-                      className="toggle-sound"
-                      type="checkbox"
-                    />
-                  </div>
-                </div>
+                  <button
+                    type="button"
+                    onClick={seansHandler}
+                    className="button"
+                  >
+                    Запуск сеанса
+                  </button>
+                  <button
+                    type="button"
+                    onClick={contentHandler}
+                    className="button"
+                  >
+                    Перезагрузить контент
+                  </button>
+                </>
               );
             }
             if (['biorecycle', 'genetic', 'bioremediation', 'cloning'].includes(oneZone.zoneName)) {

@@ -312,19 +312,20 @@ h3 {
 
   /* Museum control */
   .main_museum {
+    align-self: stretch;
     grid-column: 2/2;
     grid-row: 1/20;
     padding: 20px;
     margin-top: -10px;
     margin-left: 20px;
     margin-right: 40px;
-    margin-bottom: -60px;
     padding-top: 40px;
     border-radius: 0px;
     box-shadow: 0 2px 4px #647a8c;
     clip-path: inset(0px 0px 0px -15px);
     background-color: white;
     z-index: 999;
+    min-height: 100vh;
   }
 
   .main_museum__block {
@@ -339,15 +340,16 @@ h3 {
   .main_zones {
     grid-row: 3/3;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
 
   .main_zones__content {
-    width: 180px;
-    height: 125px;
+    width: 260px;
+    height: 180px;
     border-radius: 8px;
     box-shadow: 0 2px 4px #647a8c;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 20px;
     display: block;
     text-align: center;
@@ -361,9 +363,10 @@ h3 {
   }
 
   .img {
-    width: 75px;
-    height: 70px;
+    width: 115px;
+    height: 105px;
     margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   .main_zones__control__block {
@@ -389,7 +392,7 @@ h3 {
   }
 
   h3 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     text-align: center;
     color: #475270;
