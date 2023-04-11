@@ -28,12 +28,65 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
     dispatch(setZonesPowerThunk({ zone: oneZone.zoneName, value: powerValue }));
   };
 
+  // все закоменченное надо вынести в слайс
+
   const contentHandler = () => {
-    axios.post('/zones/content', { zone: oneZone.zoneName });
+    switch (oneZone.zoneName) {
+      case 'biolum':
+        axios('http://192.168.10.61:8010/content');
+        break;
+      case 'cityfarm':
+        axios('http://192.168.10.91:8010/content');
+        break;
+      case 'simulation':
+        // client.on('connect', () => {
+        //   client.publish('warden/simulation/commands/apps', 'config');
+        // });
+        break;
+      case 'dna_left':
+        // client.on('connect', () => {
+        //   client.publish('warden/dnk_left/commands/apps', 'config');
+        // });
+        break;
+      case 'dna_right':
+        // client.on('connect', () => {
+        //   client.publish('warden/dnk_right/commands/apps', 'config');
+        // });
+        break;
+      case 'biomaterials':
+        // client.on('connect', () => {
+        //   client.publish('warden/biomat/commands/apps', 'config');
+        // });
+        break;
+      case 'biotech':
+        // client.on('connect', () => {
+        //   client.publish('warden/art/commands/apps', 'config');
+        // });
+        break;
+      case 'bioremediation':
+        // client.on('connect', () => {
+        //   client.publish('warden/biorem/commands/apps', 'config');
+        // });
+        break;
+      case 'cloning':
+        // client.on('connect', () => {
+        //   client.publish('warden/clone/commands/apps', 'config');
+        // });
+        break;
+      case 'genetic':
+        // client.on('connect', () => {
+        //   client.publish('warden/genetic/commands/apps', 'config');
+        // });
+        break;
+      default:
+        console.log('nothing');
+    }
   };
 
   const ballsHandler = () => {
-    axios.post('/zones/balls', { zone: oneZone.zoneName });
+    // client.on('connect', () => {
+    //   client.publish('warden/simulation/commands/balls', 'simulations balls');
+    // });
   };
 
   const soundHandler = () => {
@@ -45,7 +98,7 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
   };
 
   const seansHandler = () => {
-    axios('/session');
+    axios('http://192.168.10.61:8010/session');
   };
 
   return !isVisible ? null : (
@@ -128,7 +181,7 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
                     </div>
                   </div>
                   <div className="toggle">
-                    <div className="toggle-text"><h2>Led ленты:</h2></div>
+                    <div className="toggle-text"><h2>Led-ленты:</h2></div>
                     <div className="switch-container">
                       <input
                         onClick={ledHandler}
@@ -158,6 +211,13 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
                     className="button"
                   >
                     Перезагрузить контент
+                  </button>
+                  <button
+                    type="button"
+                    onClick={seansHandler}
+                    className="button"
+                  >
+                    Запуск сеанса
                   </button>
                 </>
               );
