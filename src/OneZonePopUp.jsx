@@ -145,20 +145,6 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
             if (oneZone.zoneName === 'biolum') {
               return (
                 <>
-                  <div className="toggle">
-                    <div className="toggle-text">
-                      <h2>Звук:</h2>
-                    </div>
-                    <div className="switch-container">
-                      <input
-                        onClick={soundHandler}
-                        onChange={() => (dispatch(setZonesSoundValue(oneZone.zoneName)))}
-                        checked={soundValue ? 'checked' : ''}
-                        className="toggle-sound"
-                        type="checkbox"
-                      />
-                    </div>
-                  </div>
                   <button
                     type="button"
                     onClick={seansHandler}
@@ -176,7 +162,7 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
                 </>
               );
             }
-            if (['biorecycle', 'genetic', 'bioremediation', 'cloning'].includes(oneZone.zoneName)) {
+            if (['genetic', 'bioremediation', 'cloning'].includes(oneZone.zoneName)) {
               return (
                 <>
                   <div className="toggle">
@@ -235,20 +221,23 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
                 </>
               );
             }
-            if (oneZone.zoneName === 'gaprin') {
+            if (oneZone.zoneName === 'reactor') {
               return (
-                <div className="toggle">
-                  <div className="toggle-text"><h2>Led-ленты:</h2></div>
-                  <div className="switch-container">
-                    <input
-                      onClick={ledHandler}
-                      onChange={() => (dispatch(setZonesLedValue(oneZone.zoneName)))}
-                      checked={ledValue ? 'checked' : ''}
-                      className="toggle-led"
-                      type="checkbox"
-                    />
+                <>
+                  <div className="toggle">
+                    <div className="toggle-text"><h2>Звук:</h2></div>
+                    <div className="switch-container">
+                      <input
+                        onClick={soundHandler}
+                        onChange={() => (dispatch(setZonesSoundValue(oneZone.zoneName)))}
+                        checked={soundValue ? 'checked' : ''}
+                        className="toggle-sound"
+                        type="checkbox"
+                      />
+                    </div>
                   </div>
-                </div>
+                  <button type="button" onClick={ledHandler} className="button">Led-ленты</button>
+                </>
               );
             }
             return (

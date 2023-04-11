@@ -20,7 +20,7 @@ const zonesSlice = createSlice({
       rusName: 'ДНК Правая', zoneName: 'dna_right', status: 'OK', powerValue: false,
     },
     {
-      rusName: 'Биореактор', zoneName: 'reactor', status: 'OK', powerValue: false,
+      rusName: 'Биореактор', zoneName: 'reactor', status: 'OK', powerValue: false, soundValue: false,
     },
     {
       rusName: 'Фуднет', zoneName: 'foodnet', status: 'OK', powerValue: false,
@@ -32,16 +32,16 @@ const zonesSlice = createSlice({
       rusName: 'Медицина', zoneName: 'medicine', status: 'OK', powerValue: false,
     },
     {
-      rusName: 'Биолюминисценция', zoneName: 'biolum', status: 'OK', powerValue: false, soundValue: false,
+      rusName: 'Биолюминисценция', zoneName: 'biolum', status: 'OK', powerValue: false,
     },
     {
       rusName: 'Биотехнология', zoneName: 'biotech', status: 'OK', powerValue: false,
     },
     {
-      rusName: 'Биоразлагаемость', zoneName: 'biorecycle', status: 'OK', powerValue: false, soundValue: false,
+      rusName: 'Биоразлагаемость', zoneName: 'biorecycle', status: 'OK', powerValue: false,
     },
     {
-      rusName: 'Сифи-ферма', zoneName: 'cityfarm', status: 'OK', powerValue: false, soundValue: false, ledValue: false,
+      rusName: 'Сити-ферма', zoneName: 'cityfarm', status: 'OK', powerValue: false, soundValue: false, ledValue: false,
     },
     {
       rusName: 'Будущее', zoneName: 'future', status: 'OK', powerValue: false, soundValue: false,
@@ -56,7 +56,7 @@ const zonesSlice = createSlice({
       rusName: 'Клонирование', zoneName: 'cloning', status: 'OK', powerValue: false, soundValue: false,
     },
     {
-      rusName: 'Гаприн', zoneName: 'gaprin', status: 'OK', powerValue: false, ledValue: false,
+      rusName: 'Гаприн', zoneName: 'gaprin', status: 'OK', powerValue: false,
     },
   ],
   reducers: {
