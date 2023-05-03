@@ -1,10 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {
-  setZonesLedThunk,
-  setZonesLedValue, setZonesPowerThunk, setZonesPowerValue, setZonesSoundThunk, setZonesSoundValue,
-} from './redux/slices/zonesSlice';
 
 function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
   const keydownHandler = ({ key }) => {
@@ -21,11 +16,32 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
     return () => document.removeEventListener('keydown', keydownHandler);
   });
 
-  const { powerValue, soundValue, ledValue } = oneZone;
-  const dispatch = useDispatch();
+  // добавить кнопки и проверить их
+  const powerHandler = (e) => {
+    try {
+      axios.post('/zPower', { zone: oneZone.zoneName, value: e.target.value });
+      if (!e.target.value && ['calls', 'sityfarm', 'reactor'].includes(oneZone.zoneName)) {
+        axios.post('/zLed', { zone: oneZone.zoneName, value: e.target.value });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  const powerHandler = () => {
-    dispatch(setZonesPowerThunk({ zone: oneZone.zoneName, value: powerValue }));
+  const soundHandler = (e) => {
+    try {
+      axios.post('/zSound', { zone: oneZone.zoneName, value: e.target.value });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const ledHandler = (e) => {
+    try {
+      axios.post('/zLed', { zone: oneZone.zoneName, value: e.target.value });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const contentHandler = () => {
@@ -44,17 +60,25 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
     }
   };
 
-  const soundHandler = () => {
-    dispatch(setZonesSoundThunk({ zone: oneZone.zoneName, value: soundValue }));
-  };
-
-  const ledHandler = () => {
-    dispatch(setZonesLedThunk({ zone: oneZone.zoneName, value: ledValue }));
-  };
-
   const seansHandler = () => {
     try {
       axios('/session');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const stopHandler = () => {
+    try {
+      axios('/stop');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const restartHandler = () => {
+    try {
+      axios('/restart');
     } catch (err) {
       console.error(err);
     }
@@ -79,20 +103,24 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
               <span id="Status">{oneZone.status}</span>
             </div>
           </div>
-          <div className="toggle">
-            <div className="toggle-text">
-              <h2>Питание:</h2>
-            </div>
-            <div className="switch-container">
-              <input
-                value={powerValue}
-                className="toggle-power"
-                checked={powerValue ? 'checked' : ''}
-                type="checkbox"
-                onClick={powerHandler}
-                onChange={() => (dispatch(setZonesPowerValue(oneZone.zoneName)))}
-              />
-            </div>
+          <div className="modal-buttons">
+            <h2>Питание:</h2>
+            <button
+              onClick={powerHandler}
+              type="button"
+              className="button button_modal"
+              value="true"
+            >
+              Вкл
+            </button>
+            <button
+              onClick={powerHandler}
+              type="button"
+              className="button button_modal"
+              value="false"
+            >
+              Выкл
+            </button>
           </div>
           {(() => {
             if (oneZone.zoneName === 'simulation') {
@@ -105,17 +133,24 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
             }
             if (['calls', 'future'].includes(oneZone.zoneName)) {
               return (
-                <div className="toggle">
-                  <div className="toggle-text"><h2>Звук:</h2></div>
-                  <div className="switch-container">
-                    <input
-                      onClick={soundHandler}
-                      checked={soundValue ? 'checked' : ''}
-                      onChange={() => (dispatch(setZonesSoundValue(oneZone.zoneName)))}
-                      className="toggle-sound"
-                      type="checkbox"
-                    />
-                  </div>
+                <div className="modal-buttons">
+                  <h2 className="h2_modal">Звук:</h2>
+                  <button
+                    onClick={soundHandler}
+                    type="button"
+                    className="button button_modal"
+                    value="true"
+                  >
+                    Громко
+                  </button>
+                  <button
+                    onClick={soundHandler}
+                    type="button"
+                    className="button button_modal"
+                    value="false"
+                  >
+                    Тихо
+                  </button>
                 </div>
               );
             }
@@ -127,29 +162,43 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
             if (oneZone.zoneName === 'calls') {
               return (
                 <>
-                  <div className="toggle">
-                    <div className="toggle-text"><h2>Звук:</h2></div>
-                    <div className="switch-container">
-                      <input
-                        onClick={soundHandler}
-                        onChange={() => (dispatch(setZonesSoundValue(oneZone.zoneName)))}
-                        checked={soundValue ? 'checked' : ''}
-                        className="toggle-sound"
-                        type="checkbox"
-                      />
-                    </div>
+                  <div className="modal-buttons">
+                    <h2 className="h2_modal">Звук:</h2>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="true"
+                    >
+                      Громко
+                    </button>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="false"
+                    >
+                      Тихо
+                    </button>
                   </div>
-                  <div className="toggle">
-                    <div className="toggle-text"><h2>Led ленты:</h2></div>
-                    <div className="switch-container">
-                      <input
-                        onClick={ledHandler}
-                        onChange={() => (dispatch(setZonesLedValue(oneZone.zoneName)))}
-                        checked={ledValue ? 'checked' : ''}
-                        className="toggle-led"
-                        type="checkbox"
-                      />
-                    </div>
+                  <div className="modal-buttons">
+                    <h2>Led ленты:</h2>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="true"
+                    >
+                      Вкл
+                    </button>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="false"
+                    >
+                      Выкл
+                    </button>
                   </div>
                 </>
               );
@@ -171,25 +220,44 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
                   >
                     Перезагрузить контент
                   </button>
+                  <button
+                    type="button"
+                    onClick={stopHandler}
+                    className="button"
+                  >
+                    Остановить
+                  </button>
+                  <button
+                    type="button"
+                    onClick={restartHandler}
+                    className="button"
+                  >
+                    Перезапустить
+                  </button>
                 </>
               );
             }
             if (['genetic', 'bioremediation', 'cloning'].includes(oneZone.zoneName)) {
               return (
                 <>
-                  <div className="toggle">
-                    <div className="toggle-text">
-                      <h2>Звук:</h2>
-                    </div>
-                    <div className="switch-container">
-                      <input
-                        onClick={soundHandler}
-                        onChange={() => (dispatch(setZonesSoundValue(oneZone.zoneName)))}
-                        checked={soundValue ? 'checked' : ''}
-                        className="toggle-sound"
-                        type="checkbox"
-                      />
-                    </div>
+                  <div className="modal-buttons">
+                    <h2 className="h2_modal">Звук:</h2>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="true"
+                    >
+                      Громко
+                    </button>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="false"
+                    >
+                      Тихо
+                    </button>
                   </div>
                   <button
                     type="button"
@@ -205,50 +273,95 @@ function OneZonePopUp({ isVisible = false, oneZone, onClose }) {
             if (oneZone.zoneName === 'cityfarm') {
               return (
                 <>
-                  <div className="toggle">
-                    <div className="toggle-text"><h2>Звук:</h2></div>
-                    <div className="switch-container">
-                      <input
-                        onClick={soundHandler}
-                        onChange={() => (dispatch(setZonesSoundValue(oneZone.zoneName)))}
-                        checked={soundValue ? 'checked' : ''}
-                        className="toggle-sound"
-                        type="checkbox"
-                      />
-                    </div>
+                  <div className="modal-buttons">
+                    <h2 className="h2_modal">Звук:</h2>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="true"
+                    >
+                      Громко
+                    </button>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="false"
+                    >
+                      Тихо
+                    </button>
                   </div>
-                  <div className="toggle">
-                    <div className="toggle-text"><h2>Led-ленты:</h2></div>
-                    <div className="switch-container">
-                      <input
-                        onClick={ledHandler}
-                        checked={ledValue ? 'checked' : ''}
-                        onChange={() => (dispatch(setZonesLedValue(oneZone.zoneName)))}
-                        className="toggle-led"
-                        type="checkbox"
-                      />
-                    </div>
+                  <div className="modal-buttons">
+                    <h2>Led ленты:</h2>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="true"
+                    >
+                      Вкл
+                    </button>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="false"
+                    >
+                      Выкл
+                    </button>
                   </div>
-                  <button type="button" onClick={contentHandler} className="button">Перезагрузить контент</button>
+                  <button
+                    type="button"
+                    onClick={contentHandler}
+                    className="button"
+                  >
+                    Перезагрузить контент
+                  </button>
                 </>
               );
             }
             if (oneZone.zoneName === 'reactor') {
               return (
                 <>
-                  <div className="toggle">
-                    <div className="toggle-text"><h2>Звук:</h2></div>
-                    <div className="switch-container">
-                      <input
-                        onClick={soundHandler}
-                        onChange={() => (dispatch(setZonesSoundValue(oneZone.zoneName)))}
-                        checked={soundValue ? 'checked' : ''}
-                        className="toggle-sound"
-                        type="checkbox"
-                      />
-                    </div>
+                  <div className="modal-buttons">
+                    <h2 className="h2_modal">Звук:</h2>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="true"
+                    >
+                      Громко
+                    </button>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="false"
+                    >
+                      Тихо
+                    </button>
                   </div>
-                  <button type="button" onClick={ledHandler} className="button">Led-ленты</button>
+                  <div className="modal-buttons">
+                    <h2>Led ленты:</h2>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="true"
+                    >
+                      Вкл
+                    </button>
+                    <button
+                      onClick={soundHandler}
+                      type="button"
+                      className="button button_modal"
+                      value="false"
+                    >
+                      Выкл
+                    </button>
+                  </div>
                 </>
               );
             }

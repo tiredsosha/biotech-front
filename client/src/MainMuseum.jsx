@@ -1,22 +1,17 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import OneZone from './OneZone';
-import {
-  setMuseumPower, setMuseumPowerThunk, setMuseumSound, setMuseumSoundThunk,
-} from './redux/slices/museumSlice';
 
 export default function MainMuseum() {
   const zonesArray = useSelector((store) => store.zones);
-  const museum = useSelector((store) => store.museum);
-  const dispatch = useDispatch();
 
-  const powerHandler = () => {
-    dispatch(setMuseumPowerThunk({ value: museum.powerValue }));
+  const powerHandler = (e) => {
+    axios.post('/mPower', { value: e.target.value });
   };
 
-  const soundHandler = () => {
-    dispatch(setMuseumSoundThunk({ value: museum.soundValue }));
+  const soundHandler = (e) => {
+    axios.post('/mSound', { value: e.target.value });
   };
 
   return (
@@ -31,33 +26,43 @@ export default function MainMuseum() {
               <h1>Управление музеем:</h1>
             </div>
             <div className="main_museum__control">
-              <div className="toggle">
-                <div className="toggle-text">
-                  <h2>Питание:</h2>
-                </div>
-                <div className="switch-container">
-                  <input
-                    onClick={powerHandler}
-                    checked={museum.powerValue ? 'checked' : ''}
-                    onChange={() => dispatch(setMuseumPower(museum.powerValue))}
-                    className="toggle-power"
-                    type="checkbox"
-                  />
-                </div>
+              <h1>Питание:</h1>
+              <div className="modal-buttons">
+                <button
+                  onClick={powerHandler}
+                  type="button"
+                  className="button button_modal"
+                  value="true"
+                >
+                  Вкл
+                </button>
+                <button
+                  onClick={powerHandler}
+                  type="button"
+                  className="button button_modal"
+                  value="false"
+                >
+                  Выкл
+                </button>
               </div>
-              <div className="toggle">
-                <div className="toggle-text">
-                  <h2>Звук:</h2>
-                </div>
-                <div className="switch-container">
-                  <input
-                    onClick={soundHandler}
-                    onChange={() => dispatch(setMuseumSound(museum.soundValue))}
-                    checked={museum.soundValue ? 'checked' : ''}
-                    className="toggle-sound"
-                    type="checkbox"
-                  />
-                </div>
+              <h1>Звук:</h1>
+              <div className="modal-buttons">
+                <button
+                  onClick={soundHandler}
+                  type="button"
+                  className="button button_modal"
+                  value="true"
+                >
+                  Громко
+                </button>
+                <button
+                  onClick={soundHandler}
+                  type="button"
+                  className="button button_modal"
+                  value="false"
+                >
+                  Тихо
+                </button>
               </div>
             </div>
           </div>

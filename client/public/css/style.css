@@ -139,126 +139,6 @@ h3 {
   justify-content: space-between;
 }
 
-/* Toggles */
-.toggle {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  width: inherit;
-  justify-content: space-between;
-  padding-bottom: 20px;
-}
-
-/* Power toggle */
-.toggle-power {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 190px;
-  height: 40px;
-  display: inline-block;
-  position: relative;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: #475270;
-  transition: background-color ease 0.3s;
-}
-.toggle-power:before {
-  content: 'ВКЛ';
-  color: #475270;
-  overflow: hidden;
-  display: block;
-  position: absolute;
-  width: 95px;
-  height: 98%;
-  background: #fff;
-  font-size: 12px;
-  text-align: center;
-  line-height: 350%;
-  transition: all cubic-bezier(0.3, 1.5, 0.7, 1) 0.3s;
-  border-radius: 8px;
-  border: solid 1px;
-}
-
-.toggle-power:checked:before {
-  content: 'ВЫКЛ';
-  left: 95px;
-}
-
-/* Sound toggle */
-.toggle-sound {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 190px;
-  height: 40px;
-  display: inline-block;
-  position: relative;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: #475270;
-  transition: background-color ease 0.3s;
-}
-
-.toggle-sound:before {
-  content: 'Громко';
-  color: #475270;
-  overflow: hidden;
-  display: block;
-  position: absolute;
-  width: 95px;
-  height: 98%;
-  background: #fff;
-  font-size: 12px;
-  text-align: center;
-  line-height: 350%;
-  transition: all cubic-bezier(0.3, 1.5, 0.7, 1) 0.3s;
-  border-radius: 8px;
-  border: solid 1px;
-}
-
-.toggle-sound:checked:before {
-  content: 'Тихо';
-  left: 95px;
-}
-
-/* Led toggle */
-.toggle-led {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 190px;
-  height: 40px;
-  display: inline-block;
-  position: relative;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: #475270;
-  transition: background-color ease 0.3s;
-}
-
-.toggle-led:before {
-  content: 'ВКЛ';
-  color: #475270;
-  overflow: hidden;
-  display: block;
-  position: absolute;
-  width: 95px;
-  height: 98%;
-  background: #fff;
-  font-size: 12px;
-  text-align: center;
-  line-height: 350%;
-  transition: all cubic-bezier(0.3, 1.5, 0.7, 1) 0.3s;
-  border-radius: 8px;
-  border: solid 1px;
-}
-
-.toggle-led:checked:before {
-  content: 'ВЫКЛ';
-  left: 95px;
-}
-
 /* Buttons */
 .button {
   background-color: initial;
@@ -266,11 +146,10 @@ h3 {
   border: none;
   box-shadow: 0 2px 4px #475270;
   margin-bottom: 20px;
-
   width: 100%;
   height: 40px;
   color: #475270;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
 .button:active {
@@ -278,10 +157,28 @@ h3 {
   color: white;
 }
 
+.button:hover {
+  cursor: pointer;
+}
+
 .overlay {
   display: none;
 }
 
+.button_modal {
+  margin-left: 8px;
+  margin-right: 8px;
+  max-width: 93px;
+}
+
+.button_modal:hover {
+  cursor: pointer;
+
+}
+
+.h2_modal {
+  width: 62px
+}
 /* Tablet & desktop */
 @media only screen and (min-width: 450px) {
   .header-logo {
@@ -510,21 +407,6 @@ h3 {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* modal */
 
 .modal {
@@ -549,10 +431,8 @@ h3 {
   border-radius: 8px;
   border: solid 1px #475270;
   background: white;
-
   padding: 20px;
   display: block;
-
   box-shadow: 0 4px 4px #000000;
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.4s;
@@ -571,6 +451,10 @@ h3 {
   cursor: pointer;
 }
 
+.modal-buttons{
+  display: flex;
+  justify-content: center;
+}
 
 h4 {
   font-size: 16px;

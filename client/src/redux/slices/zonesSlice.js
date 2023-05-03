@@ -1,71 +1,86 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const PORT_DB = 'http://localhost:3001';
 const zonesSlice = createSlice({
   name: 'zones',
-  initialState: [],
+  initialState: [
+    {
+      rusName: 'Эфиромасличные', zoneName: 'etherium', status: 'OK',
+    },
+    {
+      rusName: 'Симуляция', zoneName: 'simulation', status: 'OK',
+    },
+    {
+      rusName: 'Мировые вызовы', zoneName: 'calls', status: 'OK',
+    },
+    {
+      rusName: 'ДНК Левая', zoneName: 'dna_left', status: 'OK',
+    },
+    {
+      rusName: 'ДНК Правая', zoneName: 'dna_right', status: 'OK',
+    },
+    {
+      rusName: 'Биореактор', zoneName: 'reactor', status: 'OK',
+    },
+    {
+      rusName: 'Фуднет', zoneName: 'foodnet', status: 'OK',
+    },
+    {
+      rusName: 'Биоматериалы', zoneName: 'biomaterials', status: 'OK',
+    },
+    {
+      rusName: 'Медицина', zoneName: 'medicine', status: 'OK',
+    },
+    {
+      rusName: 'Биолюминисценция', zoneName: 'biolum', status: 'OK',
+    },
+    {
+      rusName: 'Биотехнология', zoneName: 'biotech', status: 'OK',
+    },
+    {
+      rusName: 'Биоразлагаемость', zoneName: 'biorecycle', status: 'OK',
+    },
+    {
+      rusName: 'Сити-ферма', zoneName: 'cityfarm', status: 'OK',
+    },
+    {
+      rusName: 'Будущее', zoneName: 'future', status: 'OK',
+    },
+    {
+      rusName: 'Генетика', zoneName: 'genetic', status: 'OK',
+    },
+    {
+      rusName: 'Биоремедиация', zoneName: 'bioremediation', status: 'OK',
+    },
+    {
+      rusName: 'Клонирование', zoneName: 'cloning', status: 'OK',
+    },
+    {
+      rusName: 'Гаприн', zoneName: 'gaprin', status: 'OK',
+    },
+  ],
   reducers: {
-    setZonesStatus: (state, action) => action.payload,
-
-    setAllZonesPowerValue: (state, action) => state.map((oneZone) => ({ ...oneZone, powerValue: !action.payload, ledValue: !action.payload })),
-
-    setAllZonesSoundValue: (state, action) => state.map((oneZone) => ({ ...oneZone, soundValue: !action.payload })),
-
-    setZonesPowerValue: (state, action) =>
-      state.map((oneZone) =>
-        ((oneZone.zoneName === action.payload) ? { ...oneZone, powerValue: !oneZone.powerValue } : oneZone)),
-
-    setZonesSoundValue: (state, action) =>
-      state.map((oneZone) =>
-        ((oneZone.zoneName === action.payload) ? { ...oneZone, soundValue: !oneZone.soundValue } : oneZone)),
-
-    setZonesLedValue: (state, action) =>
-      state.map((oneZone) =>
-        ((oneZone.zoneName === action.payload) ? { ...oneZone, ledValue: !oneZone.ledValue } : oneZone)),
+    setZonesStatus: (state, action) => {
+      state.map((oneZone) => {
+        for (const [key, values] of Object.entries(action.payload)) {
+          if (oneZone.zoneName === key) {
+            oneZone.status = values;
+          }
+        }
+        return oneZone;
+      });
+    },
   },
 });
 
 export const {
-  setZonesStatus, setZonesPowerValue, setZonesSoundValue, setZonesLedValue, setAllZonesPowerValue, setAllZonesSoundValue,
+  setZonesStatus,
 } = zonesSlice.actions;
 
 export const getZonesStatusThunk = () => (dispatch) => {
   try {
     axios.get('/status')
-      .then((res) => axios.post('/status', { data: res.data }, { baseURL: PORT_DB }))
       .then((res) => dispatch(setZonesStatus(res.data)));
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-export const setZonesPowerThunk = (zoneValue) => (dispatch) => {
-  try {
-    axios.post('/zPower', zoneValue)
-      .then(axios.post('/zPower', { zoneValue }, { baseURL: PORT_DB }));
-    if (!zoneValue.powerValue && zoneValue.zone === 'cityfarm') {
-      dispatch(setZonesLedValue(zoneValue.zone));
-      axios.post('/zLed', { zoneValue }, { baseURL: PORT_DB });
-    }
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-export const setZonesSoundThunk = (zoneValue) => () => {
-  try {
-    axios.post('/zSound', zoneValue)
-      .then(axios.post('/zSound', { zoneValue }, { baseURL: PORT_DB }));
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-export const setZonesLedThunk = (zoneValue) => () => {
-  try {
-    axios.post('/zLed', zoneValue)
-      .then(axios.post('/zLed', { zoneValue }, { baseURL: PORT_DB }));
   } catch (err) {
     console.error(err);
   }

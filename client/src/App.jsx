@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MainMuseum from './MainMuseum';
 import { getZonesStatusThunk } from './redux/slices/zonesSlice';
-import { getMuseumStatusThunk } from './redux/slices/museumSlice';
 
 function App() {
   const dispatch = useDispatch();
@@ -15,17 +14,6 @@ function App() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       dispatch(getZonesStatusThunk());
-    }, 15000);
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    dispatch(getMuseumStatusThunk());
-  }, []);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      dispatch(getMuseumStatusThunk());
     }, 15000);
     return () => clearInterval(intervalId);
   }, []);
