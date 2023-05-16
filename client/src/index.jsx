@@ -6,8 +6,11 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import App from './App';
 
-axios.defaults.baseURL = 'http://192.168.10.200:8080';
-axios.defaults.withCredentials = false;
+// const serverPort = 'http://192.168.10.200:8080';
+const serverPort = 'http://localhost:8080';
+
+axios.defaults.baseURL = serverPort;
+axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
