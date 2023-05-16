@@ -6,18 +6,10 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import App from './App';
 
-const serverPort = 8080;
+// const serverPort = 'http://192.168.10.200:8080';
+const serverPort = 'http://localhost:8080';
 
-// надо смотреть как правильно это делать
-
-// const currentDomain = window.location.hostname;
-// if (currentDomain === 'localhost') {
-//   serverPort = 8080; // порт для локального сервера
-// } else {
-//   serverPort = 8081; // порт для удаленного сервера
-// }
-
-axios.defaults.baseURL = `http://192.168.10.200:${serverPort}`;
+axios.defaults.baseURL = serverPort;
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
